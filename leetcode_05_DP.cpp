@@ -1,30 +1,36 @@
 #include<bits/stdc++.h>
 using namespace std;
-class Solution{
-    public:
-        string longestPalindrome(string s) {
-            // python version
-            // n = len(s)
-            // dp = [[False] * n for _ in range(n)]
-            // maxLen = 1
-            // begin = 0
-            // for i in range(n):
-            //     dp[i][i] = True
-            // for L in range(2,n+1):
-            //     for i in range(n):
-            //         j = L - 1 + i
-            //         if j >= n:
-            //             break
-            //         if s[i] != s[j]:
-            //             dp[i][j] = False
-            //         else:
-            //             if j - i < 3:
-            //                 dp[i][j] = True
-            //             else:
-            //                 dp[i][j] = dp[i+1][j-1]
-            //         if dp[i][j] and j - i + 1 > maxLen:
-            //             maxLen = j - i + 1
-            //             begin = i
-            // return s[begin:begin+maxLen]
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int n = s.size();
+        int maxLen = 1;
+        int start = 0;
+        vector<vector<bool>> dp(n, vector<bool>(n, 0));
+        for (int i = 0; i < n; i++)
+            dp[i][i] = true;
+        for (int L = 2; L <= n; L++) {
+            for (int i = 0; i < n; i++) {
+                int j = L + i - 1;
+                if (j >= n) {
+                    break;
+                }
+                if (s[i] != s[j]) {
+                    dp[i][j] = false;
+                } else {
+                    if (j - i <= 2) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
+                if (dp[i][j] == true && j-i+1 > maxLen){
+                    start = i;
+                    maxLen = j-i+1;
+                }
+            }
+        }
+        string ans = s.substr(start, maxLen);
+        return ans;
     }
 };
