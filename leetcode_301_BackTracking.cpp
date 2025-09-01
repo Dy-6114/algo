@@ -41,6 +41,9 @@ public:
                     ans.push_back(str);
                 return;
             }
+            if(str.size() < l+r){
+                return;
+            }
             for(int j = i; j < str.size(); ++j){
                 if (j != i && str[j] == str[j - 1]) {
                     continue;
